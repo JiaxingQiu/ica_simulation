@@ -68,7 +68,11 @@ gen_mixmat_norm <- function(n_source, n_signal, zero_out = 1, overlap=0.3, tag01
     s <- seq(m_w_h,n_source_sqrt-m_w_h,1)
   }
   stopifnot(length(s)>=2)
+  #TRH: Why are we sampling the center of the uniform? Why not just have the center be at the very center of the grid?
+  #i.e. m_m = rep(n_source_sqrt/2,2)
   m_m <- sample(s, 2, replace = T) # center of the uniform square
+  
+  
   m <- cbind( runif(n_signal, min = max(1,m_m[1]-(m_w_h-1)), max = min(n_source_sqrt,m_m[1]+m_w_h)),
               runif(n_signal, min = max(1,m_m[2]-(m_w_h-1)), max = min(n_source_sqrt,m_m[2]+m_w_h)) )
   
@@ -92,13 +96,18 @@ gen_mixmat_norm <- function(n_source, n_signal, zero_out = 1, overlap=0.3, tag01
       stopifnot(all(!is.na(p)))
       return(p) 
     }
+    #TRH: Let's make the simplifying assumption that we are evaluating the normal PDF at the center of each grid cell:
+    # for example, for the cell: voxels[1,1], the center would be c(.5, .5)
+    #This would change the generating statement to voxels <- as.data.frame(expand.grid(seq(.5,n_source_sqrt-.5,1), seq(.5,n_source_sqrt-.5,1)))
     voxels <- as.data.frame(expand.grid(seq(1,n_source_sqrt,1), seq(1,n_source_sqrt,1)))
     voxels$p <- apply(voxels,1,get_p) # it takes 3-4 sec to calculate 100*100 pdf 
     if(any(!is.finite(voxels$p))) stop("infinite or missing values in 'voxels$p'")
     
     colnames(voxels) <- c("x", "y", "p")
+    #TRH: No need to use a sparse matrix here, in fact, the matrix is not going to be sparse at all.
     fl[[i]] <- as.matrix.coo(matrix(voxels$p, nrow = n_source_sqrt, byrow = TRUE)) # store in sparse matrix format to save storage
     
+    #TRH: I wouldn't create the mixing matrix quite yet
     if(tag01){fl[[i]]@ra=rep(1,length(fl[[i]]@ra))}
     if(is.null(mix_mat)){
       mix_mat <- c(as.matrix(fl[[i]]))
@@ -107,6 +116,11 @@ gen_mixmat_norm <- function(n_source, n_signal, zero_out = 1, overlap=0.3, tag01
     }
   }
   
+  #This is where you should normalizing the maps, as FL should be a list of square matrices
+  
+  
+  
+  #You don't need any of the adjustments to the mix_mat if you normalized the set of maps.
   mix_mat = mix_mat*10 # scale up first
   mix_mat_noise = matrix(runif(n_source*n_signal, 0, 0.1), n_signal, n_source)
   mix_mat = mix_mat + mix_mat_noise # cannot have too many zeros in mixing matrix
@@ -115,11 +129,16 @@ gen_mixmat_norm <- function(n_source, n_signal, zero_out = 1, overlap=0.3, tag01
   mix_mat[mix_mat>2] <- 2
   mix_mat[mix_mat<0] <- 0
   
+  
+  #Remove this zero_out code entirely.
   if(zero_out !=0){
     for(i in 1:n_signal){
       mix_mat[i,sample(1:n_source, zero_out, replace = F)] = 0
     }
   }
+  
+  #Now you construct your mixing matrix by first as.vectoring each element of fl,
+  #Then bind those columns into a data frame.
   if(any(!is.finite(mix_mat))) stop("infinite or missing values in 'mix_mat'")
   
   return(mix_mat) # return( list(mix_mat = mix_mat, fl = fl) ) 
