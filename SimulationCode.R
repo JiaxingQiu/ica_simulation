@@ -58,7 +58,7 @@ run_condition_set_rslurm <- function(cond_list_elem){
   counter = 1
   for(i in 1:model_iter){
     # mixmat = gen_mixmat(n_sources, n_signals, zero_out)
-    mixmat = gen_mixmat_norm(n_sources, n_signals, zero_out, overlap)
+    mixmat = gen_mixmat_norm(n_sources, n_signals, overlap)
     cat("Mixing Matrix ", i, " generated with ", n_sources, " sources, ", n_signals, " signals and ", zero_out, " knockouts\n", sep = "")
     for(j in 1:nrow(condition_set)){
       print(condition_set[j,])
