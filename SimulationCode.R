@@ -159,7 +159,7 @@ results_agg = aggregate(results$ACI, by = c(list(model_num = results$model_num, 
 results_agg2 = aggregate(results$ACI, by = c(list(model_num = results$model_num, dependency= results$comm_weight, sample_size = results$n_timepoints)), quantile, probs =c(.25,.75))
 results_agg$upper = results_agg2[,"x"][,2]
 results_agg$lower = results_agg2[,"x"][,1]
-results_agg$sample_size = factor(results_agg$sample_size, levels = c(100,500,1000), labels = c("n = 100", "n = 500", "n = 1000"))
+results_agg$sample_size = factor(results_agg$sample_size, levels = c(200,500,1000), labels = c("n = 200", "n = 500", "n = 1000"))
 ggplot(results_agg, aes(x = dependency, y = x, color = as.factor(model_num))) + geom_line() + facet_grid( .~ sample_size) 
 ggplot(results_agg, aes(x = dependency, y = x, color = as.factor(model_num)))+ geom_ribbon(aes(ymin = lower, ymax = upper), alpha = .1) + geom_line(size = 1) + facet_grid( .~ sample_size) +
   theme_classic() +labs(y = "Median Adjusted Concordance Index", x = "Level of Dependency", color = "Mixing Matrix") + theme(legend.position = "none", axis.text =element_text(color = "black", size = 12), strip.text = element_text(size = 12),
@@ -169,7 +169,7 @@ results_agg = aggregate(results2$ACI, by = c(list(model_num = results$model_num,
 results_agg2 = aggregate(results2$ACI, by = c(list(model_num = results$model_num, dependency= results$comm_weight, sample_size = results$n_timepoints)), quantile, probs =c(.25,.75))
 results_agg$upper = results_agg2[,"x"][,2]
 results_agg$lower = results_agg2[,"x"][,1]
-results_agg$sample_size = factor(results_agg$sample_size, levels = c(100,500,1000), labels = c("n = 100", "n = 500", "n = 1000"))
+results_agg$sample_size = factor(results_agg$sample_size, levels = c(200,500,1000), labels = c("n = 100", "n = 500", "n = 1000"))
 ggplot(results_agg, aes(x = dependency, y = x, color = as.factor(model_num))) + geom_line() + facet_grid( .~ sample_size) 
 ggplot(results_agg, aes(x = dependency, y = x, color = as.factor(model_num)))+ geom_ribbon(aes(ymin = lower, ymax = upper), alpha = .1) + geom_line(size = 1) + facet_grid( .~ sample_size) +
   theme_classic() +labs(y = "Median Adjusted Concordance Index", x = "Level of Dependency", color = "Mixing Matrix") + theme(legend.position = "none", axis.text =element_text(color = "black", size = 12), strip.text = element_text(size = 12),
