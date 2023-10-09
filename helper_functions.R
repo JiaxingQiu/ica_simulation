@@ -108,7 +108,10 @@ gen_mixmat_norm <- function(n_source, n_signal, overlap=0.3, tag01=F){
     #Joy: thanks for pointing this out, I agree, we don't have to use sparse matrix here, 
     # however, there are 2 reasons why I consider using it:
     # 1) the normal PDF can produce many zeros (numerical) when it is far from the mean. 
+        #TRH: This is true, however, we shouldn't have numerical 0's in the mixing matrix
+        #     if we do, this means that some voxels don't have any sources associated with them.
     # sparse matrix can be used for memory efficiency for intermediate FL object, 
+        #     
     # we eventually can generate the mixing matrix from fl easily and do surgery on mix_mat directly.
     # 2) in case of we want to use circle (set tag01 = T) instead of normal PDF.
     # another purpose of using sparse matrix is that I can set non-zero cells as 1, and keep zero cells as 0,
@@ -123,8 +126,11 @@ gen_mixmat_norm <- function(n_source, n_signal, overlap=0.3, tag01=F){
   #Joy: Please correct me if I understand you incorrectly!
   # I have 2 questions regarding normalizing -- let's say we have normal PDF maps all centered at the very center of the map.
   # 1) only cells in the middle are non-zero, fringing cells are numerically zero ( though in theroy pdf should be >0)
+      #TRH: You are correct, there could be cells that are numerically 0. However, there should be at least one map that has a non-0
+      #entry for any given cell. If there are cells that are all 0's, then that means those cells have no data associated with them.
   # thus, when I normalize fringing cells, i have (0+0)/0 issue, which causes infinite and NA
   # 2) normalizing non-zero cells will remove the "normal PDF" spacial structure. 
+  # TRH: Yes and no. The special structure we want is the shape of the normal PDF, relative to the rest of the sources. 
   # i.e. here are some code to test see what normalization does to 2 overlapping maps.
   # ------------------------------------------------------------------
   # # step 1: set up parameters like this:
