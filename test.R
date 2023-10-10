@@ -26,7 +26,7 @@ results_agg = aggregate(results$ACI, by = c(list(model_num = results$model_num, 
 results_agg2 = aggregate(results$ACI, by = c(list(model_num = results$model_num, dependency= results$comm_weight, sample_size = results$n_timepoints)), quantile, probs =c(.25,.75))
 results_agg$upper = results_agg2[,"x"][,2]
 results_agg$lower = results_agg2[,"x"][,1]
-results_agg$sample_size = factor(results_agg$sample_size, levels = c(200,500,1000), labels = c("n = 200", "n = 500", "n = 1000"))
+results_agg$sample_size = factor(results_agg$sample_size, levels = c(100,500,1000), labels = c("n = 100", "n = 500", "n = 1000"))
 ggplot(results_agg, aes(x = dependency, y = x, color = as.factor(model_num))) + geom_line() + facet_grid( .~ sample_size) +
   labs(y = "Median Adjusted Concordance Index", x = "Level of Dependency", color = "Mixing Matrix")
 ggplot(results_agg, aes(x = dependency, y = x, color = as.factor(model_num)))+ geom_ribbon(aes(ymin = lower, ymax = upper), alpha = .1) + geom_line(size = 1) + facet_grid( .~ sample_size) +
@@ -41,11 +41,11 @@ library(dplyr)
 source("./helper_functions.R")
 over_df <- data.frame()
 for(o in seq(0,1,0.1)){
-  mix_mat <- gen_mixmat_norm(100,36,overlap=o)
+  mix_mat <- gen_mixmat_norm(20,100,overlap=o)
   fl <- list()
   par(mfrow=c(6,6))
-  for(i in 1:nrow(mix_mat)){
-    fl[[i]] <- matrix(mix_mat[i,],ncol=sqrt(ncol(mix_mat)))
+  for(i in 1:ncol(mix_mat)){
+    fl[[i]] <- matrix(mix_mat[,i],ncol=sqrt(ncol(mix_mat)))
     library('plot.matrix')
     plot(fl[[i]], main=o)
   }

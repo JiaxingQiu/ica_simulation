@@ -76,8 +76,8 @@ run_condition_set_rslurm <- function(cond_list_elem){
 
 
 comm_kurt = expand.grid(c(0,.05,.1,.5), c(0,3))
-design_mat = data.frame(n_sources = c(100, 196), # number of sources
-                        n_signals = c(200, 200), # number of signals
+design_mat = data.frame(n_sources = c(10, 50), # number of sources
+                        n_signals = c(100, 144), # number of signals
                         overlap = c(0.3, 0.7), # overlap factor
                         zero_out = c(1,1), 
                         model_iter = 10, # number of runs of fastICA
@@ -85,7 +85,7 @@ design_mat = data.frame(n_sources = c(100, 196), # number of sources
                         aci_iter = 100) # adjusted concordance index, which evaluates how well our estimates of the mixing matrix match up with the original mixing matrix
 
 # n_comm ?
-cond_set1 = data.frame(n_comm = 1, comm_weight = comm_kurt[,1], kurt = comm_kurt[,2], n_timepoints = 100*2, zeroout = 1)
+cond_set1 = data.frame(n_comm = 1, comm_weight = comm_kurt[,1], kurt = comm_kurt[,2], n_timepoints = 100, zeroout = 1)
 cond_set2 = data.frame(n_comm = 1, comm_weight = comm_kurt[,1], kurt = comm_kurt[,2], n_timepoints = 500, zeroout = 1)
 cond_set3 = data.frame(n_comm = 3, comm_weight = comm_kurt[,1], kurt = comm_kurt[,2], n_timepoints = 500, zeroout = 1)
 cond_set4 = data.frame(n_comm = 3, comm_weight = comm_kurt[,1], kurt = comm_kurt[,2], n_timepoints = 100, zeroout = 1)
