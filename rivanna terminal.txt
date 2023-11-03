@@ -1,0 +1,13 @@
+# load R module and save it forever :)
+module avail
+module spider R
+module add gcc/9.2.0
+module add openmpi/3.1.6
+module add R/4.2.1
+module save
+
+cd ./ICA
+cd ./ica_simulation/
+R CMD BATCH SimulationCode.R
+cat SimulationCode.Rout
+squeue -u jq2uw
