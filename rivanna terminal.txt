@@ -1,6 +1,6 @@
 # load R module and save it forever :)
 module avail
-module spider R
+module spider R/4.2.1
 module add gcc/9.2.0
 module add openmpi/3.1.6
 module add R/4.2.1
@@ -11,3 +11,23 @@ cd ./ica_simulation/
 R CMD BATCH SimulationCode.R
 cat SimulationCode.Rout
 squeue -u jq2uw
+
+
+# install R package
+module load goolf/9.2.0_3.1.6  R
+R
+list.of.packages <- c("semTools", 
+                      "ica", 
+                      "pracma",
+                      "whitening", 
+                      "progress",
+                      "lessR",
+                      "multimode", 
+                      "parameters",
+                      "Rcpp", 
+                      "RcppArmadillo",
+                      "rslurm", 
+                      "fastICA")
+new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
+if(length(new.packages)) install.packages(new.packages)
+
