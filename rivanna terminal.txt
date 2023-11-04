@@ -16,18 +16,19 @@ squeue -u jq2uw
 # install R package
 module load goolf/9.2.0_3.1.6  R
 R
-list.of.packages <- c("semTools", 
-                      "ica", 
+.libPaths()
+list.of.packages <- c("semTools",
+                      "ica",
                       "pracma",
-                      "whitening", 
+                      "whitening",
                       "progress",
                       "lessR",
-                      "multimode", 
+                      "multimode",
                       "parameters",
-                      "Rcpp", 
+                      "Rcpp",
                       "RcppArmadillo",
-                      "rslurm", 
+                      "rslurm",
                       "fastICA")
 new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
-if(length(new.packages)) install.packages(new.packages)
+if(length(new.packages)) install.packages(new.packages, lib = "/sfs/qumulo/qhome/jq2uw/R/goolf/4.2")
 

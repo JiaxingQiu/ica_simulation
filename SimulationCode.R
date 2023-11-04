@@ -1,19 +1,19 @@
 rm(list = ls())
-# 
-# list.of.packages <- c("semTools", 
-#                       "ica", 
-#                       "pracma",
-#                       "whitening", 
-#                       "progress",
-#                       "lessR",
-#                       "multimode", 
-#                       "parameters",
-#                       "Rcpp", 
-#                       "RcppArmadillo",
-#                       "rslurm", 
-#                       "fastICA")
-# new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
-# if(length(new.packages)) install.packages(new.packages)
+ 
+list.of.packages <- c("semTools",
+                      "ica",
+                      "pracma",
+                      "whitening",
+                      "progress",
+                      "lessR",
+                      "multimode",
+                      "parameters",
+                      "Rcpp",
+                      "RcppArmadillo",
+                      "rslurm",
+                      "fastICA")
+new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
+if(length(new.packages)) install.packages(new.packages, lib = "/sfs/qumulo/qhome/jq2uw/R/goolf/4.2")
 
 
 ####ICA Simulation
