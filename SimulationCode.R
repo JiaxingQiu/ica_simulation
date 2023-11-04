@@ -1,5 +1,21 @@
 rm(list = ls())
 
+list.of.packages <- c("semTools", 
+                      "ica", 
+                      "pracma",
+                      "whitening", 
+                      "progress",
+                      "lessR",
+                      "multimode", 
+                      "parameters",
+                      "Rcpp", 
+                      "RcppArmadillo",
+                      "rslurm", 
+                      "fastICA")
+new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
+if(length(new.packages)) install.packages(new.packages)
+
+
 ####ICA Simulation
 library(semTools)
 library(ica)
@@ -13,6 +29,7 @@ library(Rcpp)
 library(RcppArmadillo)
 library(rslurm)
 library(fastICA)
+
 
 rslurm_list_gen = function(mat_gen_conditions, condition_set, reps = 100){
   
