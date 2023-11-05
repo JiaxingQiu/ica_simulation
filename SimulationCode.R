@@ -56,8 +56,8 @@ rslurm_list_gen = function(mat_gen_conditions, condition_set, reps = 100){
 }  
 
 run_condition_set_rslurm <- function(cond_list_elem){
-  source("./helper_functions.R")
-  sourceCpp("./l1_norm.cpp")
+  source("/sfs/qumulo/qhome/jq2uw/ICA/ica_simulation/helper_functions.R")
+  sourceCpp("/sfs/qumulo/qhome/jq2uw/ICA/ica_simulation/l1_norm.cpp")
   condition_set = cond_list_elem[["condition_set"]]
   n_sources = cond_list_elem[["n_sources"]]
   n_signals = cond_list_elem[["n_signals"]]
@@ -150,7 +150,6 @@ sjob3 <- slurm_map( rslurm_cond_list1000tp, run_condition_set_rslurm, jobname = 
                     slurm_options = c(account = "netlab", partition = "standard",time = "3:30:00"), preschedule_cores = F)
 
 save(sjob3, file = "1000tp_run_sjob.Rdata")
-
 
 
 

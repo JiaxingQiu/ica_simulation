@@ -13,10 +13,26 @@ cat SimulationCode.Rout
 squeue -u jq2uw
 
 
-# install R package
+# install R package through console
 module load goolf/9.2.0_3.1.6  R
 R
 .libPaths()
+list.of.packages <- c("semTools",
+                      "ica",
+                      "pracma",
+                      "whitening",
+                      "progress",
+                      "lessR",
+                      "multimode",
+                      "parameters",
+                      "Rcpp",
+                      "RcppArmadillo",
+                      "rslurm",
+                      "fastICA")
+new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
+if(length(new.packages)) install.packages(new.packages)
+
+# or hard code in R script
 list.of.packages <- c("semTools",
                       "ica",
                       "pracma",
