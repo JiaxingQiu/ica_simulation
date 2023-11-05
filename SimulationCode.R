@@ -157,6 +157,8 @@ save(sjob3, file = "1000tp_run_sjob.Rdata")
 
 
 
+
+results <- sjob1
 results <- as.data.frame(apply(results, MARGIN = 2, FUN = unlist))
 results$baselined_ACI = results$ACI
 
