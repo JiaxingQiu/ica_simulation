@@ -11,7 +11,8 @@ list.of.packages <- c("semTools",
                       "Rcpp",
                       "RcppArmadillo",
                       "rslurm",
-                      "fastICA")
+                      "fastICA",
+                      "SparseM")
 new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
 if(length(new.packages)) install.packages(new.packages, lib = "/sfs/qumulo/qhome/jq2uw/R/goolf/4.2")
 
