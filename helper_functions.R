@@ -53,7 +53,7 @@ gen_mixmat_norm <- function(n_source, n_signal, overlap=0.3, tag01=F){
   n_signal_sqrt = sqrt(n_signal)
   stopifnot(n_signal_sqrt == round(n_signal_sqrt))
   print("using gen_mixmat_norm")
-  library(SparseM)
+  
   # ---- fix boundaries for the overlapping factor ----
   if(overlap<=0.05){overlap=0.05} 
   if(overlap>=0.95){overlap=0.95} 
