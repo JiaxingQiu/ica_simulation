@@ -30,6 +30,8 @@ library(RcppArmadillo)
 library(rslurm)
 library(fastICA)
 
+source("/sfs/qumulo/qhome/jq2uw/ICA/ica_simulation/helper_functions.R")
+sourceCpp("/sfs/qumulo/qhome/jq2uw/ICA/ica_simulation/l1_norm.cpp")
 
 rslurm_list_gen = function(mat_gen_conditions, condition_set, reps = 100){
   

@@ -8,8 +8,10 @@ module save
 
 cd ./ICA
 cd ./ica_simulation/
+module load goolf/9.2.0_3.1.6  R
 R CMD BATCH SimulationCode.R
 cat SimulationCode.Rout
+cat ./_rslurm_1000tp_run/slurm_1.out
 squeue -u jq2uw
 
 
