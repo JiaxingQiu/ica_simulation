@@ -177,17 +177,25 @@ run_ica = function(gen_data_obj, iter = 25, start_vals = NA){
 
 
 
-iterate_ica = function(condition_vector,mixmat, model_num, start_iter = 100, aci_iter = 100){
+iterate_ica = function(condition_vector, mixmat, model_num, start_iter = 100, aci_iter = 100){
   
   ACI_list = list()
   pb = progress_bar$new(total = start_iter, format = "[:bar] :current/:total eta: :eta")
   counter = 1
-  data = gen_data(gen_mat(as.numeric(condition_vector["n_source"]), as.numeric(condition_vector["n_comm"]), as.numeric(condition_vector["comm_weight"])),
-                  mixmat, as.numeric(condition_vector["n_timepoints"]), kurt = as.numeric(condition_vector["kurt"]))
+  data = gen_data(gen_mat(as.numeric(condition_vector["n_source"]), 
+                          as.numeric(condition_vector["n_comm"]), 
+                          as.numeric(condition_vector["comm_weight"])),
+                  mixmat, 
+                  as.numeric(condition_vector["n_timepoints"]), 
+                  kurt = as.numeric(condition_vector["kurt"]))
   
   for(j in 1:start_iter){
     ica_run = run_ica(data,iter = aci_iter)
-    ACI_list[[counter]] = cbind(data.frame(condition_vector), data.frame(model_num = model_num , start_iter = j, ACI = ica_run$ACI, NDC = ica_run$NDC))
+    ACI_list[[counter]] = cbind(data.frame(condition_vector), 
+                                data.frame(model_num = model_num , 
+                                           start_iter = j, 
+                                           ACI = ica_run$ACI, 
+                                           NDC = ica_run$NDC))
     counter = counter + 1
     pb$tick()
   }  

@@ -59,6 +59,8 @@ rslurm_list_gen = function(mat_gen_conditions, condition_set, reps = 100){
   return(to_return)
 }  
 
+
+# main function
 run_condition_set_rslurm <- function(cond_list_elem){
   source("/sfs/qumulo/qhome/jq2uw/ICA/ica_simulation/helper_functions.R")
   sourceCpp("/sfs/qumulo/qhome/jq2uw/ICA/ica_simulation/l1_norm.cpp")
@@ -78,6 +80,7 @@ run_condition_set_rslurm <- function(cond_list_elem){
   condition_set$zero_out = zero_out
   counter = 1
   for(i in 1:model_iter){
+    # generate ?
     # mixmat = gen_mixmat(n_sources, n_signals, zero_out)
     mixmat = gen_mixmat_norm(n_sources, n_signals, overlap)
     cat("Mixing Matrix ", i, " generated with ", n_sources, " sources, ", n_signals, " signals and ", zero_out, " knockouts\n", sep = "")
@@ -114,6 +117,7 @@ cond_set5 = data.frame(n_comm = 1, comm_weight = comm_kurt[,1], kurt = comm_kurt
 cond_set6 = data.frame(n_comm = 3, comm_weight = comm_kurt[,1], kurt = comm_kurt[,2], n_timepoints = 1000, zeroout = 1)
 
 
+# generate conditions
 cond_list1 = rslurm_list_gen(design_mat, cond_set1, 50)
 cond_list2 = rslurm_list_gen(design_mat, cond_set2, 50)
 cond_list3 = rslurm_list_gen(design_mat, cond_set3, 50)
@@ -136,6 +140,7 @@ rslurm_cond_list1000tp = c(cond_list5, cond_list6)
 # 
 # syst[[5]] = system.time(test_10s500ts3comm <- run_condition_set_rslurm(cond_list3[[1]]))
 # syst[[6]] = system.time(test_50s500ts3comm <- run_condition_set_rslurm(cond_list3[[100]]))
+
 
 
 sjob1 <- slurm_map( rslurm_cond_list50n,run_condition_set_rslurm, jobname = "50s_run", nodes=length(rslurm_cond_list50n), cpus_per_node = 1, submit = TRUE,

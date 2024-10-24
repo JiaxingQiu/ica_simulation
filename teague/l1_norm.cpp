@@ -13,7 +13,7 @@
 
 // [[Rcpp::export]]
 arma::mat pw_l1_norm(arma::mat v1) {
-  
+  // This function calculates the pairwise L1 (Manhattan) distance between the rows of a matrix. 
   arma::mat l1_norm = arma::zeros<arma::mat>(v1.n_rows, v1.n_rows);
   
   for(int i=0;i< v1.n_rows; i++){
@@ -28,6 +28,8 @@ arma::mat pw_l1_norm(arma::mat v1) {
 
 // [[Rcpp::export]]
 float NDC(arma::mat v1, arma::mat v2){
+  // The NDC function (Normalized Distance Consistency) computes a measure of similarity between two matrices based on pairwise L1 norms.
+
   arma::mat e1 = pw_l1_norm(v1); 
   arma::mat e2 = pw_l1_norm(v2); 
   
@@ -42,6 +44,8 @@ float NDC(arma::mat v1, arma::mat v2){
 
 // [[Rcpp::export]]
 float ENDC(arma::mat v1, arma::mat v2, int iter = 1000){
+  // This function (Expected NDC) computes the expected NDC by shuffling the elements of two pairwise L1 norms and taking the average over a specified number of iterations (iter).
+
   arma::vec temp = arma::zeros<arma::vec>(iter);
   arma::mat e1 = pw_l1_norm(v1); 
   arma::mat e2 = pw_l1_norm(v2); 
@@ -59,6 +63,8 @@ float ENDC(arma::mat v1, arma::mat v2, int iter = 1000){
 
 // [[Rcpp::export]]
 float ACI(arma::mat v1, arma::mat v2, int iter = 1000){
+  // The ACI function calculates the Adjusted Consistency Index based on NDC and ENDC.
+  
   float ndc = NDC(v1, v2);
   float endc = ENDC(v1, v2, iter = iter);
   
