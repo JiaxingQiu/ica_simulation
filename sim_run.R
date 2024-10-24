@@ -1,13 +1,18 @@
 # setwd(dirname(rstudioapi::getSourceEditorContext()$path))
 
 rm(list = ls())
+library(dplyr)
+library(rslurm)
 library(semTools)
 library(reshape2)
 library(progress)
-list.of.packages <- c("semTools",
+library(plotly)
+list.of.packages <- c("dplyr",
+                      "rslurm",
+                      "semTools",
                       "reshape2",
-                      "plotly",
-                      "progress")
+                      "progress",
+                      "plotly")
 new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
 if(length(new.packages)) install.packages(new.packages, lib = "/sfs/qumulo/qhome/jq2uw/R/goolf/4.3")
 
