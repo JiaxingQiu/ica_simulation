@@ -1,0 +1,19 @@
+cd dir_to/ica_simulation
+module spider R # to find avail version
+module spider R/4.4.1
+module add gcc/11.4.0  openmpi/4.1.4
+echo "R_LIBS_USER=~/R/goolf/4.3" > ~/.Renviron
+module save
+module spider goolf # to find avail version
+
+$module load goolf/11.4.0_4.1.4 R
+$R
+.libPaths()
+list.of.packages <- c("semTools",                      "reshape2",                      "plotly",                      "progress")
+new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
+if(length(new.packages)) install.packages(new.packages)
+
+$R CMD BATCH slurm_sica.R
+$cat sim_run.Rout
+$cat ./_rslurm_1000tp_run/slurm_1.out
+$squeue -u jq2uw

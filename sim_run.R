@@ -6,6 +6,7 @@ library(reshape2)
 library(progress)
 list.of.packages <- c("semTools",
                       "reshape2",
+                      "plotly",
                       "progress")
 new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
 if(length(new.packages)) install.packages(new.packages, lib = "/sfs/qumulo/qhome/jq2uw/R/goolf/4.3")
