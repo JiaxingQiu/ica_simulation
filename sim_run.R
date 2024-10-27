@@ -92,7 +92,7 @@ run_wrapper_tica <- function(sim_condition) {
                            "mixmat" = mixmat,
                            "xmat" = xmat)
       
-      # iterate ica and return evalutation ACI
+      # iterate ica and return evaluation ACI
       results_list[[i]] <- iterate_ica(gen_data_obj, sim_condition)
       results_list[[i]]$iter_id <- i
       

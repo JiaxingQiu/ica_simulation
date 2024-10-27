@@ -13,7 +13,8 @@ list.of.packages <- c("semTools",                      "reshape2",            
 new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
 if(length(new.packages)) install.packages(new.packages)
 
+$R CMD BATCH slurm_tica.R
+$cat slurm_tica.Rout
 $R CMD BATCH slurm_sica.R
-$cat sim_run.Rout
-$cat ./_rslurm_1000tp_run/slurm_1.out
+$cat slurm_sica.Rout
 $squeue -u jq2uw

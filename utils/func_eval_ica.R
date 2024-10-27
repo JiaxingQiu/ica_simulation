@@ -8,9 +8,9 @@ NDC <- function(v1, v2) {
   e1 <- pw_l1_norm(v1) 
   e2 <- pw_l1_norm(v2)
   
-  # Extract the lower triangular part (including diagonal) for both matrices
-  e1v <- e1[lower.tri(e1, diag = TRUE)]
-  e2v <- e2[lower.tri(e2, diag = TRUE)]
+  # Extract the lower triangular part (excluding diagonal) for both matrices
+  e1v <- e1[lower.tri(e1, diag = F)]
+  e2v <- e2[lower.tri(e2, diag = F)]
   
   # Compute the normalized distance consistency
   ndc <- 1.0 - mean(abs(e1v - e2v))
@@ -29,8 +29,8 @@ ENDC <- function(v1, v2, iter = 1000) {
   e2 <- pw_l1_norm(v2)
   
   # Extract the lower triangular part (including diagonal) for both matrices
-  e1v <- e1[lower.tri(e1, diag = TRUE)]
-  e2v <- e2[lower.tri(e2, diag = TRUE)]
+  e1v <- e1[lower.tri(e1, diag = F)]
+  e2v <- e2[lower.tri(e2, diag = F)]
   
   # Initialize a vector to store results from each iteration
   temp <- numeric(iter)
